@@ -22,31 +22,6 @@ namespace Primary.WinFormsApp.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UserName {
-            get {
-                return ((string)(this["UserName"]));
-            }
-            set {
-                this["UserName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Password {
-            get {
-                return ((string)(this["Password"]));
-            }
-            set {
-                this["Password"] = value;
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1485")]
@@ -255,18 +230,6 @@ namespace Primary.WinFormsApp.Properties {
         public decimal DerechoMercadoLetra {
             get {
                 return ((decimal)(this["DerechoMercadoLetra"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("InstrumentationKey=fad780b5-9d86-41bf-9b39-8a0cbe73b9f7;IngestionEndpoint=https:/" +
-            "/eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediag" +
-            "nostics.monitor.azure.com/")]
-        public string AppInsightsConnectionString {
-            get {
-                return ((string)(this["AppInsightsConnectionString"]));
             }
         }
         

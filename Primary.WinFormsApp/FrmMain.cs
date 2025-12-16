@@ -124,8 +124,6 @@ namespace Primary.WinFormsApp
                     {
                         Telemetry.Log($"Login Successfull {login.BaseUrl}", logLevel: LogLevel.Information);
                         Properties.Settings.Default.ApiBaseUrl = login.BaseUrl;
-                        Properties.Settings.Default.UserName = login.UserName;
-                        Properties.Settings.Default.Password = login.Password;
                         Properties.Settings.Default.Save();
                         SetConnectionStatus();
 

@@ -47,8 +47,6 @@ namespace Primary.WinFormsApp
         private void FrmLogin_Load(object sender, EventArgs e)
         {
             this.txtBaseUrl.Text = Properties.Settings.Default.ApiBaseUrl;
-            this.txtUserName.Text = Properties.Settings.Default.UserName;
-            this.txtPassword.Text = Properties.Settings.Default.Password;
 
             if (txtUserName.Text.Length > 0)
             {

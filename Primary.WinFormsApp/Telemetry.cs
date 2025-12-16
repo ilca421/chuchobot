@@ -1,104 +1,36 @@
-﻿using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.DataContracts;
-using Microsoft.ApplicationInsights.Extensibility;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 
 namespace Primary.WinFormsApp
 {
+    /// <summary>
+    /// Local-only telemetry shim. Keeps the same API surface but avoids sending data to external services.
+    /// </summary>
     internal class Telemetry
     {
-        // Global static instance for App Insights
-        private static TelemetryClient AppInsights;
-
-        // The actual logging instance used to write entries
-        private static IOperationHolder<RequestTelemetry> AppRunTelemetry;
-
         public static bool AppInsightsEnabled { get; private set; }
-
 
         public static readonly string AppName = Assembly.GetExecutingAssembly().GetName().Name;
         public static readonly string Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static readonly string SessionId = Guid.NewGuid().ToString();
 
         /// <summary>
-        /// Starts the Application Insights logging functionality
-        /// Note: this should be set on application startup *once*
+        /// Initializes the telemetry subsystem. Only local console output is performed.
         /// </summary>
         public static void InitializeLogging()
         {
-            try
-            {
-                var connectionString = Primary.WinFormsApp.Properties.Settings.Default.AppInsightsConnectionString;
-
-                if (string.IsNullOrEmpty(connectionString))
-                {
-                    AppInsightsEnabled = false;
-                    return;
-                }
-
-                if (AppInsights == null)  // make sure doesn't run more than once!
-                {
-                    AppInsightsEnabled = true;
-                    var config = new TelemetryConfiguration()
-                    {
-                        // `Telemetry.Key` is a secret key in a static value loaded
-                        //  from secure storage (from Azure Portal)
-                        ConnectionString = connectionString
-                    };
-
-                    // Initialize App Insights
-                    AppInsights = new TelemetryClient(config);
-                    AppInsights.Context.Session.Id = SessionId;
-                    AppInsights.Context.Component.Version = Version;
-                    AppInsights.Context.User.AuthenticatedUserId = Environment.UserName;
-                    AppInsights.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-
-                    // Create the actual logging instance that will be used to log 
-                    AppRunTelemetry = AppInsights.StartOperation<RequestTelemetry>($"{AppName} - {Version}");
-                    AppRunTelemetry.Telemetry.Start();
-                }
-            }
-            catch (Exception ex)
-            {
-                AppInsightsEnabled = false;
-                LogLocal("Application Insights initialization failure: " +
-                         ex.GetBaseException().Message, ex);
-            }
+            AppInsightsEnabled = false;
+            LogLocal("Telemetry initialized (local only, no external collectors).", null, LogLevel.Information);
         }
 
         /// <summary>
-        /// Shuts down the Application Insights Logging functionality
-        /// and flushes any pending requests.
-        ///
-        /// This handles start and stop times and the application lifetime
-        /// log entry that logs duration of operation.
+        /// Shuts down telemetry. No-op for local logging.
         /// </summary>
         public static void ShutdownLogging()
         {
-            if (AppInsights != null && AppInsightsEnabled)
-            {
-                var t = AppRunTelemetry.Telemetry;
-
-                t.Properties.Add("culture", CultureInfo.CurrentUICulture.IetfLanguageTag);
-                t.Stop();
-
-                try
-                {
-                    AppInsights.StopOperation(AppRunTelemetry);
-                }
-                catch (Exception ex)
-                {
-                    LogLocal("Failed to Stop Telemetry Client: " + ex.GetBaseException().Message, ex);
-                }
-
-                AppInsights.Flush();
-                AppInsights = null;
-                AppRunTelemetry.Dispose();
-            }
+            // No external resources to dispose.
         }
 
         private class TelemetryTimeTracker : IDisposable
@@ -135,76 +67,44 @@ namespace Primary.WinFormsApp
             Log(msg, ex, false, LogLevel.Warning);
         }
 
-        public static void LogError(string msg, Exception ex = null,
-                               bool unhandledException = true)
+        public static void LogError(string msg, Exception ex = null, bool unhandledException = true)
         {
             Log(msg, ex, unhandledException, LogLevel.Error);
         }
 
         /// <summary>
-        /// Logs messages to the standard log output for Markdown Monster:
-        /// 
-        /// * Application Insights
-        /// * Local Log File
-        /// 
+        /// Logs a message locally (console). No external telemetry is used.
         /// </summary>
-        /// <param name="msg"></param>
-        public static void Log(string msg, Exception ex = null,
-                               bool unhandledException = false,
-                               LogLevel logLevel = LogLevel.Error)
+        public static void Log(string msg, Exception ex = null, bool unhandledException = false, LogLevel logLevel = LogLevel.Error)
         {
-            string winVersion = null;
+            var timestamp = DateTimeOffset.Now.ToString("u", CultureInfo.InvariantCulture);
+            var levelTag = ((int)logLevel) + " - " + logLevel.ToString();
+            var header = $"[{timestamp}] [{levelTag}]";
 
-            if (AppInsightsEnabled && AppRunTelemetry?.Telemetry != null)
+            if (ex != null)
             {
-                var secs = (int)DateTimeOffset.UtcNow.Subtract(AppRunTelemetry.Telemetry.Timestamp).TotalSeconds;
-
-                if (ex != null)
-                {
-                    AppRunTelemetry.Telemetry.Success = false;
-                    AppInsights.TrackException(ex,
-                        new Dictionary<string, string>
-                        {
-                            {"msg", msg},
-                            {"exmsg", ex.Message},
-                            {"exbasemsg", ex.GetBaseException().Message},
-                            {"exsource", ex.Source},
-                            {"extrace", ex.StackTrace},
-                            {"extype", ex.GetType().ToString()},
-                            {"severity", unhandledException ? "unhandled" : ""},
-                            {"version", Version},
-                            {"winversion", winVersion},
-                            {"machine", Environment.MachineName },
-                            {"culture", CultureInfo.CurrentCulture.IetfLanguageTag},
-                            {"uiculture", CultureInfo.CurrentUICulture.IetfLanguageTag},
-                            {"seconds", secs.ToString() },
-                            {"level", ((int) logLevel).ToString() + " - " + logLevel.ToString()}
-                        });
-
-                }
-                else
-                {
-                    // message only
-                    var props = new Dictionary<string, string>()
-                    {
-                        {"msg", msg},
-                        {"version", Version},
-                        {"culture", CultureInfo.CurrentCulture.IetfLanguageTag},
-                        {"uiculture", CultureInfo.CurrentUICulture.IetfLanguageTag},
-                        {"seconds", secs.ToString() },
-                        {"level", ((int) logLevel).ToString() + " - " + logLevel.ToString() }
-                    };
-                    AppInsights.TrackTrace(msg, props);
-                }
+                var errorMessage = $"{header} {msg} :: {ex.GetType().Name} - {ex.GetBaseException().Message}";
+                LogLocal(errorMessage, ex, logLevel);
             }
-
-            // also log to the local error log
-            LogLocal(msg, ex);
+            else
+            {
+                LogLocal($"{header} {msg}", null, logLevel);
+            }
         }
 
-        public static void LogLocal(string message, Exception ex)
+        public static void LogLocal(string message, Exception ex, LogLevel logLevel = LogLevel.Error)
         {
-            Console.Error.WriteLine(message, ex);
+            if (ex != null)
+            {
+                Console.Error.WriteLine($"{message}{Environment.NewLine}{ex}");
+            }
+            else
+            {
+                if (logLevel == LogLevel.Error || logLevel == LogLevel.Warning)
+                    Console.Error.WriteLine(message);
+                else
+                    Console.WriteLine(message);
+            }
         }
     }
 
