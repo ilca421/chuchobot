@@ -70,6 +70,14 @@ namespace Primary.WinFormsApp
             grdArbitration.AutoGenerateColumns = false;
             grdArbitration.DataSource = _arbitrationDataTable.DataTable;
 
+            // Mostrar solo la columna de volumen máximo y dejarla al final
+            var tradeSizeColumn = grdArbitration.Columns["TradeSize"];
+            if (tradeSizeColumn != null)
+            {
+                tradeSizeColumn.HeaderText = "Nominal Max";
+                tradeSizeColumn.DisplayIndex = grdArbitration.Columns.Count - 1;
+            }
+
             grdArbitration.Sort(grdArbitration.Columns["ProfitPercentage"], System.ComponentModel.ListSortDirection.Descending);
 
             timer1.Enabled = true;

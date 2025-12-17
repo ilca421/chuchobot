@@ -39,6 +39,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmArbitrationAnalyzer));
             this.grdArbitration = new System.Windows.Forms.DataGridView();
             this.KeyOwnedVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,6 +48,7 @@
             this.KeyOwnedCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProfitLast = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaxSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OwnedVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ArbitrationCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ArbitrationVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -92,6 +94,7 @@
             this.KeyOwnedCompra,
             this.Profit,
             this.ProfitLast,
+            this.MaxSize,
             this.OwnedVenta,
             this.ArbitrationCompra,
             this.ArbitrationVenta,
@@ -166,6 +169,17 @@
             this.ProfitLast.MinimumWidth = 6;
             this.ProfitLast.Name = "ProfitLast";
             this.ProfitLast.ReadOnly = true;
+            // 
+            // MaxSize
+            // 
+            this.MaxSize.DataPropertyName = "MaxSize";
+            dataGridViewCellStyle11.Format = "N0";
+            dataGridViewCellStyle11.NullValue = null;
+            this.MaxSize.DefaultCellStyle = dataGridViewCellStyle11;
+            this.MaxSize.HeaderText = "Nominal Max (4 patas)";
+            this.MaxSize.MinimumWidth = 6;
+            this.MaxSize.Name = "MaxSize";
+            this.MaxSize.ReadOnly = true;
             // 
             // OwnedVenta
             // 
@@ -442,6 +456,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn KeyOwnedCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn Profit;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProfitLast;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaxSize;
         private System.Windows.Forms.DataGridViewTextBoxColumn OwnedVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn ArbitrationCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn ArbitrationVenta;

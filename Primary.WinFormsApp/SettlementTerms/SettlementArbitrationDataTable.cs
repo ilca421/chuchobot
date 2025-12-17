@@ -25,6 +25,8 @@ namespace Primary.WinFormsApp
             _ = DataTable.Columns.Add("BuyTotal", typeof(decimal));
             _ = DataTable.Columns.Add("Comision", typeof(decimal));
 
+            _ = DataTable.Columns.Add("TradeSize", typeof(decimal));
+
             _ = DataTable.Columns.Add("Caucion", typeof(decimal));
             _ = DataTable.Columns.Add("ComisionCaucion", typeof(decimal));
 
@@ -80,6 +82,7 @@ namespace Primary.WinFormsApp
 
                 row["SellTotal"] = trade.SellTotalNeto;
                 row["BuyTotal"] = trade.BuyTotalNeto;
+                row["TradeSize"] = trade.TradeSize;
 
                 row["Comision"] = trade.BuyComisionDerechos + trade.SellComisionDerechos;
 

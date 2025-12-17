@@ -112,6 +112,8 @@ namespace Primary.WinFormsApp
                     row["DolarVenta"] = bestTrade.BuyThenSell.SellPrice;
                     row["DolarVentaLast"] = bestTrade.BuyThenSell.Last;
 
+                    row["MaxSize"] = bestTrade.MaxTradableSize;
+
                     row["RatioTrade"] = bestTrade;
 
                     if (existingRow == null)
@@ -164,6 +166,7 @@ namespace Primary.WinFormsApp
 
             _dataTable.Columns.Add("Profit", typeof(decimal));
             _dataTable.Columns.Add("ProfitLast", typeof(decimal));
+            _dataTable.Columns.Add("MaxSize", typeof(decimal));
 
             _dataTable.Columns.Add("OwnedVenta", typeof(decimal));
             _dataTable.Columns.Add("ArbitrationCompra", typeof(decimal));

@@ -62,6 +62,18 @@ namespace Primary.WinFormsApp.DolarArbitration
 
             row["RatioVariacion"] = ratioLast - ratioClose;
 
+            // Volumen max para hacer short GD / long AL (vende GD a OF, compra AL a BID)
+            var gdOfferSize = gd.GetTopOfferSize();
+            var alBidSize = al.GetTopBidSize();
+            var nominalMaxShort = Math.Min(gdOfferSize, alBidSize);
+            row["NominalMaxShort"] = nominalMaxShort;
+
+            // Volumen max para hacer long GD / short AL (compra GD a BID, vende AL a OF)
+            var gdBidSize = gd.GetTopBidSize();
+            var alOfferSize = al.GetTopOfferSize();
+            var nominalMaxLong = Math.Min(gdBidSize, alOfferSize);
+            row["NominalMaxLong"] = nominalMaxLong;
+
             if (existingRow == null)
             {
                 dataTable.Rows.Add(row);
@@ -83,6 +95,8 @@ namespace Primary.WinFormsApp.DolarArbitration
             _ = dataTable.Columns.Add("RatioLast", typeof(decimal));
             _ = dataTable.Columns.Add("RatioYesterday", typeof(decimal));
             _ = dataTable.Columns.Add("RatioVariacion", typeof(decimal));
+            _ = dataTable.Columns.Add("NominalMaxShort", typeof(decimal));
+            _ = dataTable.Columns.Add("NominalMaxLong", typeof(decimal));
 
             grdRatios.MultiSelect = false;
             grdRatios.AutoGenerateColumns = false;

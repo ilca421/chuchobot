@@ -38,6 +38,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmRatios));
             this.grdRatios = new System.Windows.Forms.DataGridView();
             this.tmr = new System.Windows.Forms.Timer(this.components);
@@ -51,6 +53,8 @@
             this.GDOffer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ALBid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RatioVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NominalMaxShort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NominalMaxLong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdRatios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,7 +75,9 @@
             this.RatioCompra,
             this.GDOffer,
             this.ALBid,
-            this.RatioVenta});
+            this.RatioVenta,
+            this.NominalMaxShort,
+            this.NominalMaxLong});
             this.grdRatios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdRatios.Location = new System.Drawing.Point(0, 0);
             this.grdRatios.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -188,6 +194,28 @@
             this.RatioVenta.ReadOnly = true;
             this.RatioVenta.Width = 88;
             // 
+            // NominalMaxShort
+            // 
+            this.NominalMaxShort.DataPropertyName = "NominalMaxShort";
+            dataGridViewCellStyle10.Format = "N0";
+            dataGridViewCellStyle10.NullValue = null;
+            this.NominalMaxShort.DefaultCellStyle = dataGridViewCellStyle10;
+            this.NominalMaxShort.HeaderText = "Nominal Max Short";
+            this.NominalMaxShort.Name = "NominalMaxShort";
+            this.NominalMaxShort.ReadOnly = true;
+            this.NominalMaxShort.Width = 115;
+            // 
+            // NominalMaxLong
+            // 
+            this.NominalMaxLong.DataPropertyName = "NominalMaxLong";
+            dataGridViewCellStyle11.Format = "N0";
+            dataGridViewCellStyle11.NullValue = null;
+            this.NominalMaxLong.DefaultCellStyle = dataGridViewCellStyle11;
+            this.NominalMaxLong.HeaderText = "Nominal Max Long";
+            this.NominalMaxLong.Name = "NominalMaxLong";
+            this.NominalMaxLong.ReadOnly = true;
+            this.NominalMaxLong.Width = 116;
+            // 
             // FrmRatios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -218,5 +246,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn GDOffer;
         private System.Windows.Forms.DataGridViewTextBoxColumn ALBid;
         private System.Windows.Forms.DataGridViewTextBoxColumn RatioVenta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NominalMaxShort;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NominalMaxLong;
     }
 }

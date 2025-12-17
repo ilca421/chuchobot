@@ -42,8 +42,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSettlementTermsAnalyzer));
             this.grdArbitration = new System.Windows.Forms.DataGridView();
             this.KeyOwnedVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,6 +60,7 @@
             this.OwnedVenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SellTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BuyTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TradeSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ArbitrationCompra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DolarCompraLast = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DolarVentaLast = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,7 +104,8 @@
             this.BuyTotal,
             this.ArbitrationCompra,
             this.DolarCompraLast,
-            this.DolarVentaLast});
+            this.DolarVentaLast,
+            this.TradeSize});
             this.grdArbitration.Location = new System.Drawing.Point(12, 64);
             this.grdArbitration.Name = "grdArbitration";
             this.grdArbitration.ReadOnly = true;
@@ -247,11 +250,22 @@
             this.BuyTotal.ReadOnly = true;
             this.BuyTotal.Visible = false;
             // 
+            // TradeSize
+            // 
+            this.TradeSize.DataPropertyName = "TradeSize";
+            dataGridViewCellStyle13.Format = "N0";
+            dataGridViewCellStyle13.NullValue = null;
+            this.TradeSize.DefaultCellStyle = dataGridViewCellStyle13;
+            this.TradeSize.HeaderText = "Nominal Max";
+            this.TradeSize.MinimumWidth = 6;
+            this.TradeSize.Name = "TradeSize";
+            this.TradeSize.ReadOnly = true;
+            // 
             // ArbitrationCompra
             // 
             this.ArbitrationCompra.DataPropertyName = "Compra";
-            dataGridViewCellStyle13.Format = "C2";
-            this.ArbitrationCompra.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle16.Format = "C2";
+            this.ArbitrationCompra.DefaultCellStyle = dataGridViewCellStyle16;
             this.ArbitrationCompra.HeaderText = "Compra";
             this.ArbitrationCompra.MinimumWidth = 6;
             this.ArbitrationCompra.Name = "ArbitrationCompra";
@@ -260,8 +274,8 @@
             // DolarCompraLast
             // 
             this.DolarCompraLast.DataPropertyName = "CompraLast";
-            dataGridViewCellStyle14.Format = "C2";
-            this.DolarCompraLast.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle17.Format = "C2";
+            this.DolarCompraLast.DefaultCellStyle = dataGridViewCellStyle17;
             this.DolarCompraLast.HeaderText = "Compra Last";
             this.DolarCompraLast.MinimumWidth = 6;
             this.DolarCompraLast.Name = "DolarCompraLast";
@@ -271,8 +285,8 @@
             // DolarVentaLast
             // 
             this.DolarVentaLast.DataPropertyName = "VentaLast";
-            dataGridViewCellStyle15.Format = "C2";
-            this.DolarVentaLast.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle18.Format = "C2";
+            this.DolarVentaLast.DefaultCellStyle = dataGridViewCellStyle18;
             this.DolarVentaLast.HeaderText = "Venta Last";
             this.DolarVentaLast.MinimumWidth = 6;
             this.DolarVentaLast.Name = "DolarVentaLast";
@@ -388,6 +402,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn OwnedVenta;
         private System.Windows.Forms.DataGridViewTextBoxColumn SellTotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn BuyTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TradeSize;
         private System.Windows.Forms.DataGridViewTextBoxColumn ArbitrationCompra;
         private System.Windows.Forms.DataGridViewTextBoxColumn DolarCompraLast;
         private System.Windows.Forms.DataGridViewTextBoxColumn DolarVentaLast;
